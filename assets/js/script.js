@@ -61,9 +61,9 @@ function startQuiz(){
 // start the timer
 function startTimer() {
     interval = setInterval(function(){
-        timer.innerHTML = "Time: " + time + "s";
         time--;
-        
+        timer.innerHTML = "Time: " + time + "s";
+
         // clear interval when time runs out
         if (time <= 0) {
             clearInterval(interval);
@@ -84,7 +84,41 @@ function quizHandling(){
 }
 
 function setUpQuestion(questionNum){
+    // set quiz header text to question text
     quizHeader.innerHTML = questions[questionNum].question;
+
+    // create list of answer choices
+    createAnswers(questionNum);
+}
+
+function createAnswers(questionNum) {
+    // checks for previous list and removes it
+    var previousList = document.querySelector(".answer-choices");
+    if (previousList) {
+        quizMain.removeChild(previousList);
+    }
+    
+    // create unorderd list element
+    var list = document.createElement("ul");
+    list.classList.add("answer-choices");
+    quizMain.appendChild(list);
+
+    var listItem;
+    var listButton;
+    // generate answer choice buttons
+    for (var i = 0; i < questions[questionNum].answerChoices.length; i++) {
+        // text that will be put inside the current list item button
+        var currentItem = questions[questionNum].answerChoices[i];
+        listItem = document.createElement("li");
+        listItem.classList.add("answer-choice");
+
+        listButton = document.createElement("button");
+        listButton.classList.add("answer-choice-button");
+        listButton.innerHTML = currentItem;
+        listItem.appendChild(listButton); // append button to list item
+        
+        list.appendChild(listItem); // append list item to list
+    }
 }
 
 
