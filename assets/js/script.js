@@ -17,6 +17,7 @@ var questions = [{
     answerChoices: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"]
 },
 ]
+var currentQuestion = 0;
 var answerSelect = "";
 
 // function definitions
@@ -54,8 +55,12 @@ function startQuiz(){
     // start the timer
     startTimer();
 
-    //handle quiz run functionality
-    quizHandling();
+    // set quiz in progress to true 
+    quizInProgress = true;
+
+    //set up first question
+    setUpQuestion(0);
+    
 }
 
 // start the timer
@@ -66,24 +71,15 @@ function startTimer() {
 
         // clear interval when time runs out
         if (time <= 0) {
-            clearInterval(interval);
+            endQuiz();
+            // clearInterval(interval);
         }
         
     }, 1000);
 } 
 
-function quizHandling(){
-    // set quiz in progress to true
-    quizInProgress = true;
-
-    // loop through questions array
-    for (var i = 0; i < questions.length; i++){
-        setUpQuestion(i);
-    }
-
-}
-
 function setUpQuestion(questionNum){
+    currentQuestion = questionNum;
     // set quiz header text to question text
     quizHeader.innerHTML = questions[questionNum].question;
 
@@ -103,6 +99,22 @@ function createAnswers(questionNum) {
     list.classList.add("answer-choices");
     quizMain.appendChild(list);
 
+    // create list eventListener
+    list.addEventListener("click", function(event){
+        var clickedEl = event.target;
+        if (clickedEl.getAttribute("class") === "answer-choice-button"){
+            answerSelect = clickedEl.innerHTML;
+            handleQuestionAnswering(currentQuestion);
+            
+            // check if there are any more questions
+            if (currentQuestion < questions.length - 1) {
+                setUpQuestion(currentQuestion + 1);
+            } else {
+                endQuiz();
+            }
+        }
+    });
+
     var listItem;
     var listButton;
     // generate answer choice buttons
@@ -114,6 +126,7 @@ function createAnswers(questionNum) {
 
         listButton = document.createElement("button");
         listButton.classList.add("answer-choice-button");
+        listButton.setAttribute("id", "data-"+ i);
         listButton.innerHTML = currentItem;
         listItem.appendChild(listButton); // append button to list item
         
@@ -121,6 +134,80 @@ function createAnswers(questionNum) {
     }
 }
 
+function handleQuestionAnswering(questionNum){
+    var correctAnswer = questions[questionNum].answer;
+    var cText = document.createElement("h2"); // h2 element that states if answer is correct or not
+    // check if answer is correct or not
+    if (answerSelect === correctAnswer){
+        cText.innerHTML = "Correct!";
+    }else {
+        cText.innerHTML = "Wrong!";
+    }
+    // append cText to body
+    document.body.appendChild(cText);
+    setTimeout(function(){
+        document.body.removeChild(cText);
+    },1000);
+
+}
+
+function endQuiz(){
+    // stop timer
+    clearInterval(interval);
+
+    //set up the end screen
+    setEndScreen();
+    
+
+}
+
+function setEndScreen(){
+    // set quiz header text
+    quizHeader.innerHTML = "All done!";
+
+    // clear quiz list
+    quizMain.removeChild(document.querySelector(".answer-choices"));
+
+    // create end screen items container
+    var endScreenItems = document.createElement("div");
+    endScreenItems.classList.add("container");
+    quizMain.appendChild(endScreenItems);
+
+    // create p text
+    var pText = document.createElement("p");
+    pText.innerHTML = "Your final score is " + time + ".";
+    pText.classList.add("end-screen-para");
+    endScreenItems.appendChild(pText);
+
+    // create form
+    var endForm = document.createElement("div");
+    endForm.classList.add("end-form");
+    endScreenItems.appendChild(endForm);
+
+    // create label
+    var lInitials = document.createElement("label");
+    lInitials.innerHTML = "Enter Initials: ";
+    lInitials.setAttribute("for", "initials-input");
+    endForm.appendChild(lInitials);
+
+    // create initals input
+    var iInitials = document.createElement("input");
+    iInitials.setAttribute("type", "text");
+    iInitials.setAttribute("id", "initials-input");
+    iInitials.setAttribute("placeholder", "Your initials");
+    endForm.appendChild(iInitials);
+
+    // create submit button
+    var sButton = document.createElement("button");
+    sButton.innerHTML = "Submit";
+    sButton.classList.add("submit-button");
+    endForm.appendChild(sButton);
+    sButton.addEventListener("click", function(){
+        if (iInitials.value) {
+            
+        }
+    })
+}
 
 // initial startup
 resetQuiz();
