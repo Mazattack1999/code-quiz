@@ -2,6 +2,7 @@
 var time = 75;
 var timer = document.querySelector(".timer");
 var interval;
+var highScores = [{name: "AB", score: 22}, {name: "BC", score: 17}, {name: "CD", score: 37}];
 var quizInProgress = false; // tell if quiz is in progress
 var quizMain = document.querySelector("main"); // store main
 var quizHeader = document.querySelector(".header"); // store quiz header text
@@ -141,6 +142,7 @@ function handleQuestionAnswering(questionNum){
     if (answerSelect === correctAnswer){
         cText.innerHTML = "Correct!";
     }else {
+        time -= 10;
         cText.innerHTML = "Wrong!";
     }
     // append cText to body
@@ -203,11 +205,63 @@ function setEndScreen(){
     sButton.classList.add("submit-button");
     endForm.appendChild(sButton);
     sButton.addEventListener("click", function(){
+        // check if initials field is filled
         if (iInitials.value) {
-            
+            updateHighScores(iInitials.value.toUpperCase(), time);
         }
     })
 }
+
+function loadHighScores() {
+    // check local storage for highscores
+    if (!localStorage.getItem("highscores")){
+        // set local storage current highscores if not yet created
+        localStorage.setItem("highscores", JSON.stringify(highScores));
+    } else {
+        // get high scores from local storage if they are there
+        highScores = JSON.parse(localStorage.getItem("highscores"));
+    }
+
+}
+
+function updateHighScores(nameIn, scoreIn){
+    // update highScores with user's info
+    highScores.push({name: nameIn, score: scoreIn});
+    sortArray(highScores);
+
+    // update local storage
+    localStorage.setItem("highscores", JSON.stringify(highScores));
+
+    // reset start screen
+    var endScreenContainer = document.querySelector(".container");
+    quizMain.removeChild(endScreenContainer);
+    resetQuiz();
+
+}
+
+function sortArray(arr) {
+    var val1;
+    var val2;
+
+    // double for loop for comparing values
+    for (var i = 0; i < arr.length - 1; i++) {            
+        for (var j = i + 1; j < arr.length; j++) {
+            //compare arr[i] and arr[j]
+            if (arr[i].score < arr[j].score) {
+                 // swap the values;
+                val1 = arr[i];
+                val2 = arr[j];
+
+                arr[i] = val2;
+                arr[j] = val1;
+            }
+        }
+    }
+    console.log(arr);
+}
+
+// load highscores from local storage
+loadHighScores();
 
 // initial startup
 resetQuiz();
