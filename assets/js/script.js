@@ -1,8 +1,11 @@
 // initialize global variables
-var time = 75;
+const timeStart = 75;
+var time = timeStart;
 var timer = document.querySelector(".timer");
 var interval;
-var highScores = [{name: "AB", score: 22}, {name: "BC", score: 17}, {name: "CD", score: 37}];
+var viewingHS = false;
+var highScoreScreen;
+var highScores = [];
 var quizInProgress = false; // tell if quiz is in progress
 var quizMain = document.querySelector("main"); // store main
 var quizHeader = document.querySelector(".header"); // store quiz header text
@@ -66,6 +69,8 @@ function startQuiz(){
 
 // start the timer
 function startTimer() {
+    time = timeStart;
+    timer.innerHTML = "Time: " + time + "s";
     interval = setInterval(function(){
         time--;
         timer.innerHTML = "Time: " + time + "s";
@@ -156,11 +161,10 @@ function handleQuestionAnswering(questionNum){
 function endQuiz(){
     // stop timer
     clearInterval(interval);
+    timer.innerHTML = "Time: " + time + "s";
 
     //set up the end screen
     setEndScreen();
-    
-
 }
 
 function setEndScreen(){
@@ -257,8 +261,76 @@ function sortArray(arr) {
             }
         }
     }
-    console.log(arr);
 }
+
+function toggleHighScoreScreen() {
+    // check if currently viewing highscore screen
+    if (viewingHS) {
+        // make quizMain visible
+        quizMain.classList.remove("hidden");
+        if (highScoreScreen){
+            document.body.removeChild(highScoreScreen);
+        }
+    } else {
+        // hide quizMain
+        quizMain.classList.add("hidden");
+        setHSScreen();
+    }
+    //toggle viewingHS
+    viewingHS = !viewingHS
+    console.log(viewingHS);
+}
+
+function setHSScreen () {
+    highScoreScreen = document.createElement("div");
+    document.body.appendChild(highScoreScreen);
+    console.log(highScoreScreen);
+
+    // create "high scores" text
+    var highScoresTitle = document.createElement("h1");
+    highScoresTitle.innerHTML = "High scores";
+    highScoreScreen.appendChild(highScoresTitle);
+
+    // create ul 
+    var highScoresList = document.createElement("ul");
+    highScoresList.classList.add("high-scores-list");
+    highScoresList.classList.add("list");
+    highScoreScreen.appendChild(highScoresList);
+
+    // populate ul
+    printHS(highScoresList);
+
+    // create button container
+    var btnContainer = document.createElement("div");
+    btnContainer.classList.add("btn-container");
+    highScoreScreen.appendChild(btnContainer);
+
+    // create "go back" button
+    
+}
+
+function printHS(list) {
+    var listItem;
+    var listText;
+
+    // print top 10 high scores
+    for (var i = 0; i < 10; i++) {
+        // create list item
+        listItem = document.createElement("li");
+        listItem.classList.add("hs-list-item");
+        listItem.classList.add("list-item");
+        list.appendChild(listItem);
+
+        listText = document.createElement("p");
+        listText.classList.add("hs-text");
+        listText.innerHTML = (i + 1) + ". " + highScores[i].name + " - " + highScores[i].score;
+        listItem.appendChild(listText);
+    }
+}
+
+
+// global event listeners
+document.querySelector(".high-scores-button").addEventListener("click", toggleHighScoreScreen);
 
 // load highscores from local storage
 loadHighScores();
