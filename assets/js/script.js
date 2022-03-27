@@ -286,6 +286,7 @@ function toggleHighScoreScreen() {
 
 function setHSScreen () {
     highScoreScreen = document.createElement("div");
+    highScoreScreen.classList.add("high-scores");
     document.body.appendChild(highScoreScreen);
 
     // create "high scores" text

@@ -18,6 +18,7 @@ button {
     box-shadow: 3px 3px 10px var(--color1);
     padding: 5px;
     font-weight: bold;
+    margin: 0 5px;
 }
 
 button:hover {
@@ -84,6 +85,7 @@ main ul {
 /* Permanent elements start */
 .timer {
     color: var(--color4);
+    font-weight: bold;
 }
 /* Permanent elements end*/
 
@@ -103,6 +105,14 @@ main ul {
     margin-left: 10px;
 }
 /* End of quiz classes end */
+
+/* High scores screen classes start */
+.high-scores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+/* High scores screen classes end */
 
 /* Utility classes start */
 .hidden {
