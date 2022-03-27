@@ -277,14 +277,12 @@ function toggleHighScoreScreen() {
         setHSScreen();
     }
     //toggle viewingHS
-    viewingHS = !viewingHS
-    console.log(viewingHS);
+    viewingHS = !viewingHS;
 }
 
 function setHSScreen () {
     highScoreScreen = document.createElement("div");
     document.body.appendChild(highScoreScreen);
-    console.log(highScoreScreen);
 
     // create "high scores" text
     var highScoresTitle = document.createElement("h1");
@@ -306,7 +304,24 @@ function setHSScreen () {
     highScoreScreen.appendChild(btnContainer);
 
     // create "go back" button
-    
+    var btnReturn = document.createElement("button");
+    btnReturn.classList.add("btn");
+    btnReturn.innerHTML = "Go back";
+    btnReturn.addEventListener("click", toggleHighScoreScreen);
+    btnContainer.appendChild(btnReturn);
+
+    // create "clear high scores button"
+    var btnClear = document.createElement("button");
+    btnClear.classList.add("btn");
+    btnClear.innerHTML = "Clear high scores";
+    btnContainer.appendChild(btnClear);
+    btnClear.addEventListener("click", function(){
+        highScores = [];
+        localStorage.setItem("highscores", JSON.stringify(highScores));
+        // call toggleHighScoreScreen twice to refresh screen
+        toggleHighScoreScreen();
+        toggleHighScoreScreen();
+    })
 }
 
 function printHS(list) {
@@ -314,7 +329,7 @@ function printHS(list) {
     var listText;
 
     // print top 10 high scores
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < Math.min(10, highScores.length); i++) {
         // create list item
         listItem = document.createElement("li");
         listItem.classList.add("hs-list-item");
