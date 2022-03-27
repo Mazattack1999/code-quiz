@@ -47,6 +47,7 @@ function resetQuiz(){
 
 // moving from start screen into quiz screen
 function startQuiz(){
+    quizMain.classList.add("quiz-in-progress");
     // save description paragraph
     var para = document.querySelector(".description"); 
     // remove description paragraph
@@ -159,6 +160,9 @@ function handleQuestionAnswering(questionNum){
 }
 
 function endQuiz(){
+    quizMain.classList.remove("quiz-in-progress");
+    // set quiz in progress to true 
+    quizInProgress = false;
     // stop timer
     clearInterval(interval);
     timer.innerHTML = "Time: " + time + "s";

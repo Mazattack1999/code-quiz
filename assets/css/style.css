@@ -1,8 +1,111 @@
+:root {
+    --color1: black;
+    --color2: rgb(71, 71, 71);
+    --color3: rgb(207, 207, 207);
+    --color4: rgb(175, 14, 14);
+}
 
+*{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
+/* General elements start*/
+button {
+    background-color: var(--color4);
+    border: var(--color1);
+    border-radius: 5px;
+    box-shadow: 3px 3px 10px var(--color1);
+    padding: 5px;
+    font-weight: bold;
+}
 
+button:hover {
+    transform: translate(0px, -2px);
+}
 
+ul {
+    list-style:none;
+}
 
+li {
+    margin: 5px;
+}
+
+input {
+    background-color: var(--color3);
+}
+/* General elements end */
+
+/* Header start */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--color1);
+    height: 7vh;
+}
+
+header * {
+    margin: 0 10px;
+}
+/* Header end */
+
+/* Body start */
+body {
+    background-color: var(--color2);
+    color: var(--color3);
+    
+}
+/* Body end */
+
+/* Main start */
+main {
+display: flex;
+flex-direction: column;
+align-items:center;
+margin: 5px 10px;
+}
+
+main * {
+    padding: 10px;
+}
+
+main p {
+    text-align: center;
+}
+
+main ul {
+    display: flex;
+    flex-direction: column;
+}
+/* Main end */
+
+/* Permanent elements start */
+.timer {
+    color: var(--color4);
+}
+/* Permanent elements end*/
+
+/* Quiz in progress classes start */
+.quiz-in-progress{
+    align-items: flex-start;
+}
+
+.answer-choice-button {
+    text-align: left;
+    width: 100%;
+}
+/* Quiz in progress classes end */
+
+/* End of quiz clesses Start*/
+.submit-button {
+    margin-left: 10px;
+}
+/* End of quiz classes end */
+
+/* Utility classes start */
 .hidden {
     display: none;
 }
+/* Utility classes end */
