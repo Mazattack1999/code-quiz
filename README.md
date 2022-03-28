@@ -18,4 +18,4 @@ Created by Micah Zahn
 Quiz Questions from W3Schools: https://www.w3schools.com/quiztest/
 
 ## Screenshot
-![Website Screenshot](images/code-quiz-screenshot.png)
+![Website Screenshot](assets/images/code-quiz-screenshot.png)
