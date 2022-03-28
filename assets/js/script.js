@@ -9,16 +9,57 @@ var highScores = [];
 var quizInProgress = false; // tell if quiz is in progress
 var quizMain = document.querySelector("main"); // store main
 var quizHeader = document.querySelector(".header"); // store quiz header text
-// questions, their answers, and their answer choices stored in an array of objects
-var questions = [{
-    question: "The condition in an if/else statement is enclosed with ______.",
-    answer: "3. parenthesis",
-    answerChoices: ["1. quotes", "2. curly brackets", "3. parenthesis", "4. square brackets"]
+// questions, their answers, and their answer choices stored in an array of objects (Questions source: W3Schools. Check README.md for link)
+var questions = [
+{
+    question: "What does HTML stand for?",
+    answer: "1. Hyper Text Markup Language",
+    answerChoices: ["1. Hyper Text Markup Language", "2. Home Tool Markup Language", "3. Hyperlinks and Text Markup Language"]
 },
 {
-    question: "Arrays in JavaScript can be used to store _______.",
-    answer: "4. all of the above",
-    answerChoices: ["1. numbers and strings", "2. other arrays", "3. booleans", "4. all of the above"]
+    question: "What does CSS stand for?",
+    answer: "3. Cascading Style Sheets",
+    answerChoices: ["1. Creative Style Sheets", "2. Colorful Style Sheets", "3. Cascading Style Sheets", "4 .Computer Style Sheets"]
+},
+{
+    question: "Which HTML attribute is used to define inline styles?",
+    answer: "3. style",
+    answerChoices: ["1. font", "2. class", "3. style", "4. styles"]
+},
+{
+    question: "How do you insert a comment in a CSS file?",
+    answer: "1. /*this is a comment*/",
+    answerChoices: ["1. /*this is a comment*/", "2. 'this is a comment", "3. //this is a comment", "4. //this is a comment//"]
+},
+{
+    question: "Which property is used to change the left margin of an element?",
+    answer: "2. margin-left",
+    answerChoices: ["1. padding-left", "2. margin-left", "3. indent"]
+},
+{
+    question: "How do you write 'Hello World' in an alert box?",
+    answer: "1 .alert('Hello World')",
+    answerChoices: ["1 .alert('Hello World')", "2. msgBox('Hello World'", "3. msg('Hello World')", "4. alertBox('Hello World')"]
+},
+{
+    question: "How do you create a function in JavaScript?",
+    answer: "1. function myFunction()",
+    answerChoices: ["1. function myFunction()", "2. function:myFunction()", "3. function = myFunction()"]
+},
+{
+    question: "How do you call a function named 'myFunction'?",
+    answer: "2. myFunction()",
+    answerChoices: ["1. call myFunction()", "2. myFunction()", "3. call function myFunction()"]
+},
+{
+    question: "How to write an IF statement in JavaScript?",
+    answer: "1. if(i == 5)",
+    answerChoices: ["1. if(i == 5)", "2. if i = 5 then", "3. if i = 5", "4. if i == 5 then"]
+},
+{
+    question: "How do you round the number 7.25, to the nearest integer?",
+    answer: "3. Math.round(7.25)",
+    answerChoices: ["1. round(7.25)", "2. Math.rnd(7.25)", "3. Math.round(7.25)", "4. rnd(7.25)"]
 },
 ]
 var currentQuestion = 0;
